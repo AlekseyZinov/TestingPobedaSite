@@ -1,6 +1,9 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -9,47 +12,55 @@ public class MainPage {
     private WebDriverWait wait;
     private Actions action;
 
+    @FindBy(xpath = "//img[@alt = '«Авиакомпания «Победа», Группа «Аэрофлот»'][1]")
+    WebElement logoElement;
+
+    @FindBy(xpath = "//a[text() = 'Информация']")
+    WebElement informationElement;
+
+    @FindBy(xpath = "//a[text() = 'Подготовка к полёту']")
+    WebElement preparingForFlightElement;
+
+    @FindBy(xpath = "//a[text() = 'Полезная информация']")
+    WebElement usefulInformationElement;
+
+    @FindBy(xpath = "//a[text() = 'О компании']")
+    WebElement aboutCompanyElement;
+
+
     public MainPage(WebDriver driver, WebDriverWait wait, Actions action) {
         this.driver = driver;
         this.wait = wait;
         this.action = action;
+        PageFactory.initElements(driver, this);
     }
-
-    private static final By logoLocator = By.xpath("//img[@alt = '«Авиакомпания «Победа», Группа «Аэрофлот»'][1]");
-    private static final By informationLocator = By.xpath("//a[text() = 'Информация']");
-    private static final By preparingForFlightLocator = By.xpath("//a[text() = 'Подготовка к полёту']");
-    private static final By usefulInformationLocator = By.xpath("//a[text() = 'Полезная информация']");
-    private static final By aboutCompanyLocator = By.xpath("//a[text() = 'О компании']");
-
 
     public String findElementTitle() {
         return driver.getTitle();
     }
 
     public boolean findElementLogo() {
-        wait.until(ExpectedConditions.visibilityOf(driver.findElement(logoLocator)));
-        return driver.findElement(logoLocator).isDisplayed();
+        wait.until(ExpectedConditions.visibilityOf(logoElement));
+        return logoElement.isDisplayed();
     }
 
     private void targetInformation() {
-        var itemInformationElement = driver.findElement(informationLocator);
-        action.moveToElement(itemInformationElement).perform();
-
+        action.moveToElement(informationElement).perform();
     }
 
     private boolean visiblePreparingForFlight() {
-        wait.until(ExpectedConditions.visibilityOf(driver.findElement(preparingForFlightLocator)));
-        return driver.findElement(preparingForFlightLocator).isDisplayed();
+        wait.until(ExpectedConditions.visibilityOf(preparingForFlightElement));
+        return preparingForFlightElement.isDisplayed();
     }
 
     private boolean visibleUsefulInformation() {
-        wait.until(ExpectedConditions.visibilityOf(driver.findElement(usefulInformationLocator)));
-        return driver.findElement(usefulInformationLocator).isDisplayed();
+        wait.until(ExpectedConditions.visibilityOf(usefulInformationElement));
+        return usefulInformationElement.isDisplayed();
     }
 
     private boolean visibleAboutCompany() {
-        wait.until(ExpectedConditions.visibilityOf(driver.findElement(aboutCompanyLocator)));
-        return driver.findElement(aboutCompanyLocator).isDisplayed();
+        wait.until(ExpectedConditions.visibilityOf(aboutCompanyElement));
+        return aboutCompanyElement.isDisplayed();
     }
 
     public boolean visibleItemsInformation() {
