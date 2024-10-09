@@ -34,41 +34,35 @@ public class TicketSearchPage {
     @FindBy(xpath = "//input[@placeholder = 'Куда']")
     WebElement inputWhere;
 
-    @FindBy(xpath = "//div[@class = 'dp-1ern7ez-root']")
-    WebElement itemSelectWhere;
-
     @FindBy(xpath = "//button[text() = 'Поиск']")
     WebElement buttonSearch;
 
     @FindBy(xpath = "//div[@class = 'dp-1bgt86e-root']//div[@data-errored = 'true']")
     WebElement errorSearch;
 
-    public void scrollToTicketSearch () throws InterruptedException {
-        Thread.sleep(2000);
+    public void scrollToTicketSearch() {
         action.scrollToElement(ticketSearch).perform();
     }
 
-    public void textInputWhereFrom () throws InterruptedException {
+    public void textInputWhereFrom() {
         inputWhereFrom.click();
         inputWhereFrom.sendKeys(Keys.BACK_SPACE, moscow);
-//        Thread.sleep(1800);
         wait.until(ExpectedConditions.visibilityOf(itemSelectWhereFrom));
         inputWhereFrom.sendKeys(Keys.DOWN, Keys.ENTER);
     }
 
-    public void textInputWhere () throws InterruptedException {
+    public void textInputWhere() {
         inputWhere.click();
         inputWhere.sendKeys(Keys.BACK_SPACE, saintPetersburg);
-//        Thread.sleep(1800);
         wait.until(ExpectedConditions.visibilityOf(itemSelectWhereFrom));
         inputWhere.sendKeys(Keys.DOWN, Keys.ENTER);
     }
 
-    public void clickButtonSearch () {
+    public void clickButtonSearch() {
         buttonSearch.click();
     }
 
-    public boolean isVisibleErrorSearch(){
+    public boolean isVisibleErrorSearch() {
         wait.until(ExpectedConditions.visibilityOf(errorSearch));
         return errorSearch.isDisplayed();
     }

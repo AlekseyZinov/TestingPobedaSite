@@ -28,17 +28,17 @@ public class TestingPobedaSite {
         System.setProperty("webdriver.chrome.driver", "C:\\Users\\azinov\\Desktop\\chromedrives\\chromedriver.exe");
         driver = new ChromeDriver();
         driver.manage().window().maximize();
-        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(5));
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
-        wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(10));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(40));
         action = new Actions(driver);
         driver.navigate().to(driverPath);
     }
 
-//    @After
-//    public void tearDown() {
-//        driver.quit();
-//    }
+    @After
+    public void tearDown() {
+        driver.quit();
+    }
 
     @Test
     public void testOpenMainPage() {
@@ -54,7 +54,7 @@ public class TestingPobedaSite {
     }
 
     @Test
-    public void testTicketSearch () throws InterruptedException {
+    public void testTicketSearch() {
         ticketSearchPage = new TicketSearchPage(driver, wait, action);
         ticketSearchPage.scrollToTicketSearch();
         ticketSearchPage.textInputWhereFrom();

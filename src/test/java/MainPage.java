@@ -88,44 +88,4 @@ public class MainPage {
         }
         return bool;
     }
-
-    public void scrollToTicketSearch () throws InterruptedException {
-        Thread.sleep(2000);
-        action.scrollToElement(ticketSearch).perform();
-    }
-
-    public void textInputWhereFrom () throws InterruptedException {
-        Thread.sleep(1800);
-        inputWhereFrom.click();
-        Thread.sleep(1800);
-        inputWhereFrom.sendKeys(Keys.BACK_SPACE);
-        Thread.sleep(1800);
-        inputWhereFrom.sendKeys(moscow);
-        Thread.sleep(1800);
-        inputWhereFrom.sendKeys(Keys.DOWN);
-        Thread.sleep(1800);
-        inputWhereFrom.sendKeys(Keys.ENTER);
-    }
-
-    public void textInputWhere () throws InterruptedException {
-        Thread.sleep(1800);
-        inputWhere.click();
-        Thread.sleep(1800);
-        inputWhere.sendKeys(Keys.BACK_SPACE);
-        Thread.sleep(1800);
-        inputWhere.sendKeys(saintPetersburg);
-        Thread.sleep(1800);
-        inputWhere.sendKeys(Keys.DOWN);
-        Thread.sleep(1800);
-        inputWhere.sendKeys(Keys.ENTER);
-    }
-
-    public void clickButtonSearch () {
-        buttonSearch.click();
-    }
-
-    public boolean isVisibleErrorSearch(){
-        wait.until(ExpectedConditions.visibilityOf(errorSearch));
-        return errorSearch.isDisplayed();
-    }
 }
