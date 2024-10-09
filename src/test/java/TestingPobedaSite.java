@@ -10,6 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import javax.swing.*;
 import java.time.Duration;
+import java.util.concurrent.TimeUnit;
 
 public class TestingPobedaSite {
 
@@ -18,6 +19,7 @@ public class TestingPobedaSite {
     private WebDriverWait wait;
     private Actions action;
     private MainPage mainPage;
+    private TicketSearchPage ticketSearchPage;
     private static final String actualTextTitle = "Авиакомпания «Победа» - купить авиабилеты онлайн, дешёвые билеты на самолёт, прямые и трансферные рейсы с пересадками";
 
 
@@ -25,17 +27,18 @@ public class TestingPobedaSite {
     public void setUp() {
         System.setProperty("webdriver.chrome.driver", "C:\\Users\\azinov\\Desktop\\chromedrives\\chromedriver.exe");
         driver = new ChromeDriver();
+        driver.manage().window().maximize();
         driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(5));
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
-        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(20));
         action = new Actions(driver);
         driver.navigate().to(driverPath);
     }
 
-    @After
-    public void tearDown() {
-        driver.quit();
-    }
+//    @After
+//    public void tearDown() {
+//        driver.quit();
+//    }
 
     @Test
     public void testOpenMainPage() {
@@ -48,5 +51,15 @@ public class TestingPobedaSite {
     public void testVisibleItemsInformation() {
         mainPage = new MainPage(driver, wait, action);
         Assert.assertTrue(mainPage.visibleItemsInformation());
+    }
+
+    @Test
+    public void testTicketSearch () throws InterruptedException {
+        ticketSearchPage = new TicketSearchPage(driver, wait, action);
+        ticketSearchPage.scrollToTicketSearch();
+        ticketSearchPage.textInputWhereFrom();
+        ticketSearchPage.textInputWhere();
+        ticketSearchPage.clickButtonSearch();
+        ticketSearchPage.isVisibleErrorSearch();
     }
 }

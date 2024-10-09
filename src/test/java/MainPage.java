@@ -1,4 +1,4 @@
-import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -11,6 +11,9 @@ public class MainPage {
     private WebDriver driver;
     private WebDriverWait wait;
     private Actions action;
+
+    private final static String moscow = "Москва";
+    private final static String saintPetersburg = "Санкт-Петербург";
 
     @FindBy(xpath = "//img[@alt = '«Авиакомпания «Победа», Группа «Аэрофлот»'][1]")
     WebElement logoElement;
@@ -27,6 +30,20 @@ public class MainPage {
     @FindBy(xpath = "//a[text() = 'О компании']")
     WebElement aboutCompanyElement;
 
+    @FindBy(xpath = "//div[@style = 'z-index:1']")
+    WebElement ticketSearch;
+
+    @FindBy(xpath = "//input[@placeholder = 'Откуда'][1]")
+    WebElement inputWhereFrom;
+
+    @FindBy(xpath = "//input[@placeholder = 'Куда']")
+    WebElement inputWhere;
+
+    @FindBy(xpath = "//button[text() = 'Поиск']")
+    WebElement buttonSearch;
+
+    @FindBy(xpath = "//div[@class = 'dp-1bgt86e-root']//div[@data-errored = 'true']")
+    WebElement errorSearch;
 
     public MainPage(WebDriver driver, WebDriverWait wait, Actions action) {
         this.driver = driver;
@@ -48,17 +65,17 @@ public class MainPage {
         action.moveToElement(informationElement).perform();
     }
 
-    private boolean visiblePreparingForFlight() {
+    private boolean isVisiblePreparingForFlight() {
         wait.until(ExpectedConditions.visibilityOf(preparingForFlightElement));
         return preparingForFlightElement.isDisplayed();
     }
 
-    private boolean visibleUsefulInformation() {
+    private boolean isVisibleUsefulInformation() {
         wait.until(ExpectedConditions.visibilityOf(usefulInformationElement));
         return usefulInformationElement.isDisplayed();
     }
 
-    private boolean visibleAboutCompany() {
+    private boolean isVisibleAboutCompany() {
         wait.until(ExpectedConditions.visibilityOf(aboutCompanyElement));
         return aboutCompanyElement.isDisplayed();
     }
@@ -66,9 +83,49 @@ public class MainPage {
     public boolean visibleItemsInformation() {
         boolean bool = false;
         targetInformation();
-        if (visiblePreparingForFlight() || visibleUsefulInformation() || visibleAboutCompany()) {
+        if (isVisiblePreparingForFlight() || isVisibleUsefulInformation() || isVisibleAboutCompany()) {
             bool = true;
         }
         return bool;
+    }
+
+    public void scrollToTicketSearch () throws InterruptedException {
+        Thread.sleep(2000);
+        action.scrollToElement(ticketSearch).perform();
+    }
+
+    public void textInputWhereFrom () throws InterruptedException {
+        Thread.sleep(1800);
+        inputWhereFrom.click();
+        Thread.sleep(1800);
+        inputWhereFrom.sendKeys(Keys.BACK_SPACE);
+        Thread.sleep(1800);
+        inputWhereFrom.sendKeys(moscow);
+        Thread.sleep(1800);
+        inputWhereFrom.sendKeys(Keys.DOWN);
+        Thread.sleep(1800);
+        inputWhereFrom.sendKeys(Keys.ENTER);
+    }
+
+    public void textInputWhere () throws InterruptedException {
+        Thread.sleep(1800);
+        inputWhere.click();
+        Thread.sleep(1800);
+        inputWhere.sendKeys(Keys.BACK_SPACE);
+        Thread.sleep(1800);
+        inputWhere.sendKeys(saintPetersburg);
+        Thread.sleep(1800);
+        inputWhere.sendKeys(Keys.DOWN);
+        Thread.sleep(1800);
+        inputWhere.sendKeys(Keys.ENTER);
+    }
+
+    public void clickButtonSearch () {
+        buttonSearch.click();
+    }
+
+    public boolean isVisibleErrorSearch(){
+        wait.until(ExpectedConditions.visibilityOf(errorSearch));
+        return errorSearch.isDisplayed();
     }
 }
