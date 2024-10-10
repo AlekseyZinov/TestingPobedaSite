@@ -16,34 +16,34 @@ public class MainPage {
     private final static String saintPetersburg = "Санкт-Петербург";
 
     @FindBy(xpath = "//img[@alt = '«Авиакомпания «Победа», Группа «Аэрофлот»'][1]")
-    WebElement logoElement;
+    private WebElement logoElement;
 
     @FindBy(xpath = "//a[text() = 'Информация']")
-    WebElement informationElement;
+    private WebElement informationElement;
 
     @FindBy(xpath = "//a[text() = 'Подготовка к полёту']")
-    WebElement preparingForFlightElement;
+    private WebElement preparingForFlightElement;
 
     @FindBy(xpath = "//a[text() = 'Полезная информация']")
-    WebElement usefulInformationElement;
+    private WebElement usefulInformationElement;
 
     @FindBy(xpath = "//a[text() = 'О компании']")
-    WebElement aboutCompanyElement;
+    private WebElement aboutCompanyElement;
 
     @FindBy(xpath = "//div[@style = 'z-index:1']")
-    WebElement ticketSearch;
+    private WebElement ticketSearch;
 
     @FindBy(xpath = "//input[@placeholder = 'Откуда'][1]")
-    WebElement inputWhereFrom;
+    private WebElement inputWhereFrom;
 
     @FindBy(xpath = "//input[@placeholder = 'Куда']")
-    WebElement inputWhere;
+    private WebElement inputWhere;
 
     @FindBy(xpath = "//button[text() = 'Поиск']")
-    WebElement buttonSearch;
+    private WebElement buttonSearch;
 
     @FindBy(xpath = "//div[@class = 'dp-1bgt86e-root']//div[@data-errored = 'true']")
-    WebElement errorSearch;
+    private WebElement errorSearch;
 
     public MainPage(WebDriver driver, WebDriverWait wait, Actions action) {
         this.driver = driver;

@@ -1,3 +1,4 @@
+import com.sun.source.tree.AssertTree;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -20,6 +21,8 @@ public class TestingPobedaSite {
     private Actions action;
     private MainPage mainPage;
     private TicketSearchPage ticketSearchPage;
+    private BookingManagementPage bookingManagementPage;
+    private SearchOrderPage searchOrderPage;
     private static final String actualTextTitle = "Авиакомпания «Победа» - купить авиабилеты онлайн, дешёвые билеты на самолёт, прямые и трансферные рейсы с пересадками";
 
 
@@ -28,11 +31,11 @@ public class TestingPobedaSite {
         System.setProperty("webdriver.chrome.driver", "C:\\Users\\azinov\\Desktop\\chromedrives\\chromedriver.exe");
         driver = new ChromeDriver();
         driver.manage().window().maximize();
-        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(10));
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        wait = new WebDriverWait(driver, Duration.ofSeconds(40));
+        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(15));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(25));
         action = new Actions(driver);
-        driver.navigate().to(driverPath);
+        driver.get("https://www.flypobeda.ru/");
     }
 
     @After
@@ -60,6 +63,15 @@ public class TestingPobedaSite {
         ticketSearchPage.textInputWhereFrom();
         ticketSearchPage.textInputWhere();
         ticketSearchPage.clickButtonSearch();
-        ticketSearchPage.isVisibleErrorSearch();
+        Assert.assertTrue(ticketSearchPage.isVisibleErrorSearch());
+    }
+
+    @Test
+    public void testBookingManagement() {
+        bookingManagementPage = new BookingManagementPage(driver, wait, action);
+        Assert.assertTrue(bookingManagementPage.chekBookingManagement());
+        bookingManagementPage.searchBySurnameAndTicketNumber();
+        searchOrderPage = new SearchOrderPage(driver, wait, action);
+        Assert.assertTrue(searchOrderPage.isVisibleErrorSearchOrder());
     }
 }

@@ -23,22 +23,22 @@ public class TicketSearchPage {
     private final static String saintPetersburg = "Санкт-Петербург";
 
     @FindBy(xpath = "//div[@style = 'z-index:1']")
-    WebElement ticketSearch;
+    private WebElement ticketSearch;
 
     @FindBy(xpath = "//input[@placeholder = 'Откуда'][1]")
-    WebElement inputWhereFrom;
+    private WebElement inputWhereFrom;
 
     @FindBy(xpath = "//div[@class = 'dp-1ct2iey-root'][@tabindex]")
-    WebElement itemSelectWhereFrom;
+    private WebElement itemSelectWhereFrom;
 
     @FindBy(xpath = "//input[@placeholder = 'Куда']")
-    WebElement inputWhere;
+    private WebElement inputWhere;
 
     @FindBy(xpath = "//button[text() = 'Поиск']")
-    WebElement buttonSearch;
+    private WebElement buttonSearch;
 
     @FindBy(xpath = "//div[@class = 'dp-1bgt86e-root']//div[@data-errored = 'true']")
-    WebElement errorSearch;
+    private WebElement errorSearch;
 
     public void scrollToTicketSearch() {
         action.scrollToElement(ticketSearch).perform();
