@@ -1,91 +1,21 @@
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Selectors.*;
+import static com.codeborne.selenide.Selenide.*;
 
 public class MainPage {
-    private WebDriver driver;
-    private WebDriverWait wait;
-    private Actions action;
-
-    private final static String moscow = "Москва";
-    private final static String saintPetersburg = "Санкт-Петербург";
-
-    @FindBy(xpath = "//img[@alt = '«Авиакомпания «Победа», Группа «Аэрофлот»'][1]")
-    private WebElement logoElement;
-
-    @FindBy(xpath = "//a[text() = 'Информация']")
-    private WebElement informationElement;
-
-    @FindBy(xpath = "//a[text() = 'Подготовка к полёту']")
-    private WebElement preparingForFlightElement;
-
-    @FindBy(xpath = "//a[text() = 'Полезная информация']")
-    private WebElement usefulInformationElement;
-
-    @FindBy(xpath = "//a[text() = 'О компании']")
-    private WebElement aboutCompanyElement;
-
-    @FindBy(xpath = "//div[@style = 'z-index:1']")
-    private WebElement ticketSearch;
-
-    @FindBy(xpath = "//input[@placeholder = 'Откуда'][1]")
-    private WebElement inputWhereFrom;
-
-    @FindBy(xpath = "//input[@placeholder = 'Куда']")
-    private WebElement inputWhere;
-
-    @FindBy(xpath = "//button[text() = 'Поиск']")
-    private WebElement buttonSearch;
-
-    @FindBy(xpath = "//div[@class = 'dp-1bgt86e-root']//div[@data-errored = 'true']")
-    private WebElement errorSearch;
-
-    public MainPage(WebDriver driver, WebDriverWait wait, Actions action) {
-        this.driver = driver;
-        this.wait = wait;
-        this.action = action;
-        PageFactory.initElements(driver, this);
+    public void targetElement() {
+        $(byXpath("//a[text() = 'Информация']")).hover();
     }
 
-    public String findElementTitle() {
-        return driver.getTitle();
+    public void isVisiblePreparingForFlight () {
+        $(byXpath("//a[text() = 'Подготовка к полёту']")).shouldBe(visible);
+
+    }
+    public void isVisibleUsefulInformation() {
+        $(byXpath("//a[text() = 'Полезная информация']")).shouldBe(visible);
     }
 
-    public boolean findElementLogo() {
-        wait.until(ExpectedConditions.visibilityOf(logoElement));
-        return logoElement.isDisplayed();
-    }
-
-    private void targetInformation() {
-        action.moveToElement(informationElement).perform();
-    }
-
-    private boolean isVisiblePreparingForFlight() {
-        wait.until(ExpectedConditions.visibilityOf(preparingForFlightElement));
-        return preparingForFlightElement.isDisplayed();
-    }
-
-    private boolean isVisibleUsefulInformation() {
-        wait.until(ExpectedConditions.visibilityOf(usefulInformationElement));
-        return usefulInformationElement.isDisplayed();
-    }
-
-    private boolean isVisibleAboutCompany() {
-        wait.until(ExpectedConditions.visibilityOf(aboutCompanyElement));
-        return aboutCompanyElement.isDisplayed();
-    }
-
-    public boolean visibleItemsInformation() {
-        boolean bool = false;
-        targetInformation();
-        if (isVisiblePreparingForFlight() || isVisibleUsefulInformation() || isVisibleAboutCompany()) {
-            bool = true;
-        }
-        return bool;
+    public void isVisibleAboutCompany() {
+        $(byXpath("//a[text() = 'О компании']")).shouldBe(visible);
     }
 }

@@ -1,83 +1,40 @@
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Selectors.*;
+import static com.codeborne.selenide.Selenide.*;
 
 public class BookingManagementPage {
-    private WebDriver driver;
-    private WebDriverWait wait;
-    private Actions action;
-
-    public BookingManagementPage(WebDriver driver, WebDriverWait wait, Actions action) {
-        this.driver = driver;
-        this.wait = wait;
-        this.action = action;
-        PageFactory.initElements(driver, this);
-    }
-
     private final static String orderNumber = "XXXXXX";
     private final static String surname = "Qwerty";
 
-    @FindBy(xpath = "//button[@class = 'dp-r60xlk-root-root'][3]")
-    private WebElement buttonBookingManagement;
-
-    @FindBy(xpath = "//input[@placeholder = 'Фамилия клиента']")
-    private WebElement inputClientSurname;
-
-    @FindBy(xpath = "//input[@placeholder = 'Номер бронирования или билета']")
-    private WebElement inputBookingOrTicketNumber;
-
-    @FindBy(xpath = "//button[text() = 'Поиск']")
-    private WebElement buttonSearch;
-
-    private void goToBookingManagementTab() {
-        buttonBookingManagement.click();
+    public void goToBookingManagementTab() {
+        $(byXpath("//button[@class = 'dp-r60xlk-root-root'][3]")).click();
     }
 
-    private boolean isVisibleClientSurname() {
-        return inputClientSurname.isDisplayed();
+    public void visibleClientSurname() {
+        $(byXpath("//input[@placeholder = 'Фамилия клиента']")).shouldBe(visible);
     }
 
-    private boolean isVisibleBookingOrTicketNumber() {
-        return inputBookingOrTicketNumber.isDisplayed();
+    public void visibleBookingOrTicketNumber() {
+        $(byXpath("//input[@placeholder = 'Номер бронирования или билета']")).shouldBe(visible);
     }
 
-    private boolean isVisibleButtonSearch() {
-        return buttonSearch.isDisplayed();
+    public void visibleButtonSearch() {
+        $(byXpath("//button[text() = 'Поиск']")).shouldBe(visible);
     }
 
-    public boolean chekBookingManagement() {
-        boolean bool = false;
-        goToBookingManagementTab();
-        if (isVisibleClientSurname() || isVisibleBookingOrTicketNumber() || isVisibleButtonSearch()) {
-            bool = true;
-        }
-        return bool;
+    public void fillingClientSurname() {
+        $(byXpath("//input[@placeholder = 'Фамилия клиента']")).setValue(surname);
     }
 
-    private void fillingClientSurname() {
-        inputClientSurname.sendKeys(surname);
+    public void fillingOrderNumber() {
+        $(byXpath("//input[@placeholder = 'Номер бронирования или билета']")).setValue(orderNumber);
     }
 
-    private void fillingOrderNumber() {
-        inputBookingOrTicketNumber.sendKeys(orderNumber);
+    public void clickSearch() {
+        $(byXpath("//button[text() = 'Поиск']")).click();
     }
 
-    private void clickSearch() {
-        buttonSearch.click();
-    }
-
-    public void searchBySurnameAndTicketNumber() {
-        fillingClientSurname();
-        fillingOrderNumber();
-        clickSearch();
-    }
-
-    public void moveNewWindow() {
-        Object[] windowHandles=driver.getWindowHandles().toArray();
-        driver.switchTo().window((String) windowHandles[1]);
+    public void switchingToTab() {
+        switchTo().window(1);
     }
 }
