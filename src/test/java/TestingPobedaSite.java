@@ -1,17 +1,23 @@
+import com.codeborne.selenide.Selenide;
 import com.sun.source.tree.AssertTree;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import javax.swing.*;
 import java.time.Duration;
-import java.util.concurrent.TimeUnit;
+//import java.util.concurrent.TimeUnit;
+import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Selectors.*;
+import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.WebDriverRunner.url;
+
 
 public class TestingPobedaSite {
 
@@ -31,8 +37,8 @@ public class TestingPobedaSite {
         System.setProperty("webdriver.chrome.driver", "C:\\Users\\azinov\\Desktop\\chromedrives\\chromedriver.exe");
         driver = new ChromeDriver();
         driver.manage().window().maximize();
-        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(15));
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(25));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(25));
         wait = new WebDriverWait(driver, Duration.ofSeconds(25));
         action = new Actions(driver);
         driver.get("https://www.flypobeda.ru/");
@@ -71,6 +77,7 @@ public class TestingPobedaSite {
         bookingManagementPage = new BookingManagementPage(driver, wait, action);
         Assert.assertTrue(bookingManagementPage.chekBookingManagement());
         bookingManagementPage.searchBySurnameAndTicketNumber();
+        bookingManagementPage.moveNewWindow();
         searchOrderPage = new SearchOrderPage(driver, wait, action);
         Assert.assertTrue(searchOrderPage.isVisibleErrorSearchOrder());
     }

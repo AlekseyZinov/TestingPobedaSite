@@ -17,10 +17,12 @@ public class SearchOrderPage {
         PageFactory.initElements(driver, this);
     }
 
-    @FindBy(xpath = "//div[text() = 'Заказ с указанными параметрами не найден']")
+    @FindBy(xpath = "//div[@class = 'message_error']")
     private WebElement errorSearchOrder;
 
     public boolean isVisibleErrorSearchOrder() {
         return errorSearchOrder.isDisplayed();
     }
+
+
 }

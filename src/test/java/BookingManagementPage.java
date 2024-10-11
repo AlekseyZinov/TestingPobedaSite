@@ -75,4 +75,9 @@ public class BookingManagementPage {
         fillingOrderNumber();
         clickSearch();
     }
+
+    public void moveNewWindow() {
+        Object[] windowHandles=driver.getWindowHandles().toArray();
+        driver.switchTo().window((String) windowHandles[1]);
+    }
 }
